@@ -94,3 +94,44 @@ struct Day_03 : AOCSolvable {
       return "\(treeCount)"
     }
 }
+
+
+struct Day_03_part_2 : AOCSolvable {
+    static var day: String { "03" }
+
+    private static var input: [String] = []
+    
+    static func solve(input: [String]) -> String {
+      self.input = input
+
+      return "\(trees(forX:  1, andY: 1) * trees(forX: 3, andY: 1) * trees(forX: 5, andY: 1) * trees(forX: 7, andY: 1) * trees(forX: 1, andY: 2))"
+    }
+
+    private static func trees(
+        forX xDelta: Int,
+        andY yDelta: Int
+    ) -> Int {
+      var treeCount = 0
+
+      var x = 0
+      var y = 0
+
+      while y < input.count {
+        if x >= input[y].count {
+          x -= input[y].count
+        }
+
+        let row = input[y]
+        let nextPoint = row[row.index(row.startIndex, offsetBy: x)]
+
+        if nextPoint == "#" {
+          treeCount += 1
+        }
+
+        x += xDelta
+        y += yDelta
+      }
+        
+      return treeCount
+    }
+}
